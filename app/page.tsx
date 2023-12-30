@@ -10,9 +10,8 @@ export default function Home() {
 			<div className="w-full h-screen relative">
 		    <Image
 				src={BookagerImage}
-				layout='fill'
-				objectFit='contain'
-				alt="Picture of the author"
+				fill
+				alt="background image"
 			/>
 			</div>
 
