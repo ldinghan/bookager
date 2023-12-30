@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect } from 'react'
 import { Dialog, Button, Flex, Text, TextField, Select } from '@radix-ui/themes'
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { collection, addDoc, doc, setDoc } from "firebase/firestore"; 
-import { auth, db } from '../../firebase'
+import { auth, db, storage } from '../../firebase'
 import { PlusIcon } from '@radix-ui/react-icons'
 
 type BookmarkType = {
+    iconPath: string;
 	id: string;
 	name: string;
 	link: string;
@@ -15,6 +17,9 @@ type BookmarkType = {
 }
 
 function AddBookmarkComponent({ categories, updateData, children, currentBookmark, isEdit }:{ categories:string[], updateData:Function, children:React.ReactNode, currentBookmark?:BookmarkType, isEdit?:boolean }) {
+
+
+    // HANDLES CATEGORIES
     const [updatedCategories, setUpdatedCategories] = useState<string[]>(Array.from(categories));
     const [newCategory, setNewCategory] = useState("");
 
@@ -44,36 +49,62 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
         setUpdatedCategories(categories);
     }, [categories]); 
 
+
+
+
+    // HANDLES ADDING OF BOOKMARKS
+    const [bookmarkIconPath, setBookmarkIconPath] = useState(currentBookmark ? currentBookmark.iconPath : "");
     const [bookmarkName, setBookmarkName] = useState(currentBookmark ? currentBookmark.name : "");
     const [bookmarkURL, setBookmarkURL] = useState(currentBookmark ? currentBookmark.link : "");
-    const [bookmarkCategory, setBookmarkCategory] = useState(currentBookmark ? currentBookmark.category : "");
+    const [bookmarkCategory, setBookmarkCategory] = useState(currentBookmark ? currentBookmark.category : updatedCategories[0]);
+    
     const handleAddBookmark = async () => {
-        if (bookmarkName.trim() === "" || bookmarkURL === "") {
+        if (bookmarkName.trim() === "" || bookmarkURL.trim() === "") {
             // DISPLAY ERROR MESSAGE - NO EMPTY NAME / URL
 			return;
         }
         try {
             if (auth.currentUser) {
+                let imageUrl = "";
+                if (file) {
+                    const storageRef = ref(storage, `${auth.currentUser.uid}/${file.name}`);
+                    await uploadBytes(storageRef, file);
+                    const snapshot = await getDownloadURL(storageRef);
+                    imageUrl = snapshot;
+                    setBookmarkIconPath(imageUrl);
+                }
                 await addDoc(collection(db, `users/${auth.currentUser.uid}/bookmarks`), {
+                    bookmarkIconPath: imageUrl,
                     bookmarkName,
                     bookmarkURL,
                     bookmarkCategory
-              });
-              updateData();
+                });
+                updateData();
             }
         } catch (e) {
             console.error("Error adding document: ", e);
         }
     }
 
+
+    // HANDLES EDITING OF BOOKMAKRS
     const handleEditBookmark = async () => {
-        if (bookmarkName.trim() === "" || bookmarkURL === "") {
+        if (bookmarkName.trim() === "" || bookmarkURL.trim() === "") {
             // DISPLAY ERROR MESSAGE - NO EMPTY NAME / URL
 			return;
         }
         try {
             if (auth.currentUser) {
+                let imageUrl = "";
+                if (file) {
+                    const storageRef = ref(storage, `${auth.currentUser.uid}/${file.name}`);
+                    await uploadBytes(storageRef, file);
+                    const snapshot = await getDownloadURL(storageRef);
+                    imageUrl = snapshot;
+                    setBookmarkIconPath(imageUrl);
+                }
                 await setDoc(doc(db, `users/${auth.currentUser.uid}/bookmarks`, currentBookmark!.id), {
+                    bookmarkIconPath: imageUrl,
                     bookmarkName,
                     bookmarkURL,
                     bookmarkCategory
@@ -86,9 +117,25 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
     }
 
 
+    // HANDLES FILE UPLOAD
+    const [file, setFile] = useState<File | undefined>(undefined);
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files || e.target.files.length === 0) {
+            return;
+        }
+        setFile(e.target.files[0]);
+    }
 
 
 
+    // CLEARS ALL STATES UPON CANCELLATION
+    const handleCancelEvent = () => {
+        //setFile(currentBookmark ? undefined : undefined);
+        setBookmarkIconPath(currentBookmark ? currentBookmark.iconPath : "");
+        setBookmarkName(currentBookmark ? currentBookmark.name : "");
+        setBookmarkURL(currentBookmark ? currentBookmark.link : "");
+        setBookmarkCategory(currentBookmark ? currentBookmark.category : "");
+    }
 
 
     return (
@@ -174,11 +221,18 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
                         </Dialog.Content>
                     </Dialog.Root>
                 </label>
+                <label>
+                    <Text as="div" size="2" mb="1" weight="bold">
+                    Image (optional)
+                    </Text>
+                    <input type='file' onChange={handleFileUpload}/>
+                    
+                </label>
                 </Flex>
 
                 <Flex gap="3" mt="4" justify="end">
                 <Dialog.Close>
-                    <Button variant="soft" color="gray">
+                    <Button onClick={handleCancelEvent} variant="soft" color="gray">
                     Cancel
                     </Button>
                 </Dialog.Close>

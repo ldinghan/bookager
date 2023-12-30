@@ -2,8 +2,10 @@
 import { Link, Table } from '@radix-ui/themes'
 import React, { useState, useEffect } from 'react'
 import EditBookmarkButtons from './EditBookmarkButtons';
+import Image from "next/image";
 
 type BookmarkType = {
+    iconPath: string;
     id:string;
     name:string;
     link:string;
@@ -23,6 +25,7 @@ function BookmarkLineDisplay({ categories, bookmarks, updateData }: { categories
             <Table.Root>
             <Table.Header className='text-center'>
                 <Table.Row>
+                <Table.ColumnHeaderCell>Icon</Table.ColumnHeaderCell>
                 <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
                 <Table.ColumnHeaderCell>URL</Table.ColumnHeaderCell>
                 <Table.ColumnHeaderCell>Category</Table.ColumnHeaderCell>
@@ -33,7 +36,15 @@ function BookmarkLineDisplay({ categories, bookmarks, updateData }: { categories
             <Table.Body className='text-center'>
                 {bookmarks.map(bookmark => 
                     <Table.Row key={bookmark.id} className='hover:bg-fuchsia-50'>
-                        <Table.RowHeaderCell>{bookmark.name}</Table.RowHeaderCell>
+                        <Table.RowHeaderCell>
+                        {bookmark.iconPath &&
+                        <Image
+                            src={ bookmark.iconPath }
+                            alt='icon'
+                            width={24}
+                            height={24}
+                        />}</Table.RowHeaderCell>
+                        <Table.Cell>{bookmark.name}</Table.Cell>
                         <Table.Cell><Link href={bookmark.link} target='_blank'>{bookmark.link}</Link></Table.Cell>
                         <Table.Cell>{bookmark.category}</Table.Cell>
                         <Table.Cell><EditBookmarkButtons currentBookmark={bookmark} updateData={updateData} categories={updatedCategories}/></Table.Cell>

@@ -12,6 +12,7 @@ import { Button } from '@radix-ui/themes';
 import WebBrowsing from '../components/WebBrowsing';
 
 type BookmarkType = {
+	iconPath: string;
 	id: string;
 	name: string;
 	link: string;
@@ -28,7 +29,7 @@ function Dashboard() {
 		const updatedBookmarks:BookmarkType[] = [];
 		querySnapshot.forEach((doc) => {
 			const data = doc.data();
-			updatedBookmarks.push({id: doc.id, name:data.bookmarkName, link:data.bookmarkURL, category:data.bookmarkCategory})
+			updatedBookmarks.push({id: doc.id, iconPath:data.bookmarkIconPath, name:data.bookmarkName, link:data.bookmarkURL, category:data.bookmarkCategory})
 		});
 		setBookmarks(updatedBookmarks);
 	}

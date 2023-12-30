@@ -8,7 +8,6 @@ function WebBrowsing() {
 	const [query, setQuery] = useState("");
 
 	const handleSearch = () => {
-		console.log(query)
 		const cleanedQuery = query.replaceAll(" ", "%20")
 		const url = `https://www.google.com/search?q=${cleanedQuery}`
 		window.open(url, '_blank')!.focus();

@@ -8,6 +8,7 @@ import { auth, db } from "../../firebase"
 import AddBookmarkComponent from './AddBookmarkComponent';
 
 type BookmarkType = {
+	iconPath: string;
 	id: string;
 	name: string;
 	link: string;
