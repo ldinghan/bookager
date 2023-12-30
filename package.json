@@ -14,6 +14,7 @@
     "classnames": "^2.5.0",
     "firebase": "^10.7.1",
     "next": "14.0.4",
+    "postcss-import": "^15.1.0",
     "react": "^18",
     "react-dom": "^18"
   },
