@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { TextField, Button } from '@radix-ui/themes'
 import { GlobeIcon } from '@radix-ui/react-icons'
 
 function WebBrowsing() {
 	const [query, setQuery] = useState("");
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	const handleSearch = () => {
 		const cleanedQuery = query.replaceAll(" ", "%20")
@@ -19,13 +20,29 @@ function WebBrowsing() {
 		}
 	}
 
+	useEffect(() => {
+		const handleKeyPress = (e:KeyboardEvent) => {
+			const isInputFocused = document.activeElement === inputRef.current;
+			if (e.key === "/" && !isInputFocused && inputRef.current) {
+				inputRef.current.focus();
+				e.preventDefault();
+			}
+		}
+
+		window.addEventListener('keydown', handleKeyPress);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyPress);
+		}
+	}, []);
+
 	return (
 		<div className='flex'>
-			<TextField.Root size="3">
+			<TextField.Root size="3" >
 				<TextField.Slot>
 					<GlobeIcon height="16" width="16" />
 				</TextField.Slot>
-				<TextField.Input placeholder="Browse the web" size="3" onKeyDown={e => enterKeyPressed(e)} onChange={e => setQuery(e.target.value)}/>
+				<TextField.Input ref={inputRef} placeholder="Browse the web" size="3" onKeyDown={e => enterKeyPressed(e)} onChange={e => setQuery(e.target.value)}/>
 			</TextField.Root>
 			<Button className='self-center' onClick={handleSearch}>Search</Button>
 		</div>
