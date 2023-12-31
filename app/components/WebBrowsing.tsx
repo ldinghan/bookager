@@ -21,10 +21,16 @@ function WebBrowsing() {
 	}
 
 	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
 		const handleKeyPress = (e:KeyboardEvent) => {
 			const isInputFocused = document.activeElement === inputRef.current;
 			if (e.key === "/" && !isInputFocused && inputRef.current) {
 				inputRef.current.focus();
+				e.preventDefault();
+			} else if (e.key === "Escape" && isInputFocused && inputRef.current) {
+				inputRef.current.blur();
 				e.preventDefault();
 			}
 		}
