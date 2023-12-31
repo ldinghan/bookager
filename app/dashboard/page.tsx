@@ -10,6 +10,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { BookmarkIcon } from '@radix-ui/react-icons';
 import { Button } from '@radix-ui/themes';
 import WebBrowsing from '../components/WebBrowsing';
+import BookmarkIconDisplay from '../components/BookmarkIconDisplay';
 
 type BookmarkType = {
 	iconPath: string;
@@ -79,6 +80,7 @@ function Dashboard() {
 				</div>
 			</div>
 			<BookmarkLineDisplay categories={categories} bookmarks={bookmarks} updateData={updateData}/>
+			{/* <BookmarkIconDisplay /> */}
 		</div>
     )
 }

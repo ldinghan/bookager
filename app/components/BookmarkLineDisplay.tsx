@@ -35,7 +35,7 @@ function BookmarkLineDisplay({ categories, bookmarks, updateData }: { categories
 
             <Table.Body className='text-center'>
                 {bookmarks.map(bookmark => 
-                    <Table.Row key={bookmark.id} className='hover:bg-fuchsia-50'>
+                    <Table.Row key={bookmark.id} className='hover:bg-fuchsia-50 dark:hover:bg-violet-700'>
                         <Table.RowHeaderCell>
                         {bookmark.iconPath && <Image
                             src={ bookmark.iconPath }

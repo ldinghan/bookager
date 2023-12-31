@@ -42,7 +42,7 @@ function WebBrowsing() {
 				<TextField.Slot>
 					<GlobeIcon height="16" width="16" />
 				</TextField.Slot>
-				<TextField.Input ref={inputRef} placeholder="Browse the web" size="3" onKeyDown={e => enterKeyPressed(e)} onChange={e => setQuery(e.target.value)}/>
+				<TextField.Input ref={inputRef} placeholder="Press '/' to browse" size="3" onKeyDown={e => enterKeyPressed(e)} onChange={e => setQuery(e.target.value)}/>
 			</TextField.Root>
 			<Button className='self-center' onClick={handleSearch}>Search</Button>
 		</div>
