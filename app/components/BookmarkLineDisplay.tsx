@@ -1,8 +1,10 @@
 "use client";
 import { Link, Table } from '@radix-ui/themes'
 import React, { useState, useEffect } from 'react'
+import { useTheme } from 'next-themes';
 import EditBookmarkButtons from './EditBookmarkButtons';
 import Image from "next/image";
+import classnames from 'classnames';
 
 type BookmarkType = {
     isStarred: boolean;
@@ -21,6 +23,8 @@ function BookmarkLineDisplay({ categories, bookmarks, updateData }: { categories
         setUpdatedCategories(categories);
     }, [categories]); 
 
+    const theme = useTheme().theme;
+
     return (
         <>
             <Table.Root>
@@ -36,7 +40,10 @@ function BookmarkLineDisplay({ categories, bookmarks, updateData }: { categories
 
             <Table.Body className='text-center'>
                 {bookmarks.map(bookmark => 
-                    <Table.Row key={bookmark.id} className='hover:bg-fuchsia-50 dark:hover:bg-violet-700'>
+                    <Table.Row key={bookmark.id} className={classnames({
+                        'hover:bg-fuchsia-100': theme === 'light',
+                        'hover:bg-violet-700': theme === 'dark'
+                    })} >
                         <Table.RowHeaderCell>
                         {bookmark.iconPath && <Image
                             src={ bookmark.iconPath }

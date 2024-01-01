@@ -6,7 +6,7 @@ import {useTheme} from "next-themes";
 
 function LightDarkModeSwitch() {
     const [isDarkMode, setDarkMode] = useState(false);
-    const { theme, setTheme } = useTheme()
+    const { setTheme } = useTheme()
 
     const toggleDarkMode = () => {
         if (isDarkMode) {
