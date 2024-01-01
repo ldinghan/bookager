@@ -9,6 +9,7 @@ import { auth, db, storage } from '../../firebase'
 import { PlusIcon } from '@radix-ui/react-icons'
 
 type BookmarkType = {
+    isStarred: boolean;
     iconPath: string;
 	id: string;
 	name: string;
@@ -27,7 +28,6 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
 		const cleanedNewCategory = newCategory.charAt(0).toUpperCase() + newCategory.slice(1).trim();
 		if (cleanedNewCategory.trim() === "") {
 			// NO EMPTY CATEGORY
-			console.log("no empt")
 			return;
 		}
         if (!updatedCategories.includes(cleanedNewCategory)) {
@@ -53,6 +53,7 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
 
 
     // HANDLES ADDING OF BOOKMARKS
+    const [bookmarkIsStarred, setBookmarkIsStarred] = useState(currentBookmark ? currentBookmark.isStarred : false);
     const [bookmarkIconPath, setBookmarkIconPath] = useState(currentBookmark ? currentBookmark.iconPath : "");
     const [bookmarkName, setBookmarkName] = useState(currentBookmark ? currentBookmark.name : "");
     const [bookmarkURL, setBookmarkURL] = useState(currentBookmark ? currentBookmark.link : "");
@@ -74,6 +75,7 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
                     setBookmarkIconPath(imageUrl);
                 }
                 await addDoc(collection(db, `users/${auth.currentUser.uid}/bookmarks`), {
+                    bookmarkIsStarred,
                     bookmarkIconPath: imageUrl,
                     bookmarkName,
                     bookmarkURL,
@@ -104,6 +106,7 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
                     setBookmarkIconPath(imageUrl);
                 }
                 await setDoc(doc(db, `users/${auth.currentUser.uid}/bookmarks`, currentBookmark!.id), {
+                    bookmarkIsStarred, 
                     bookmarkIconPath: imageUrl,
                     bookmarkName,
                     bookmarkURL,
@@ -131,6 +134,7 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
     // CLEARS ALL STATES UPON CANCELLATION
     const handleCancelEvent = () => {
         //setFile(currentBookmark ? undefined : undefined);
+        setBookmarkIsStarred(currentBookmark ? currentBookmark.isStarred : false);
         setBookmarkIconPath(currentBookmark ? currentBookmark.iconPath : "");
         setBookmarkName(currentBookmark ? currentBookmark.name : "");
         setBookmarkURL(currentBookmark ? currentBookmark.link : "");

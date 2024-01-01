@@ -5,6 +5,7 @@ import EditBookmarkButtons from './EditBookmarkButtons';
 import Image from "next/image";
 
 type BookmarkType = {
+    isStarred: boolean;
     iconPath: string;
     id:string;
     name:string;

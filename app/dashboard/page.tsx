@@ -13,6 +13,7 @@ import WebBrowsing from '../components/WebBrowsing';
 import BookmarkIconDisplay from '../components/BookmarkIconDisplay';
 
 type BookmarkType = {
+	isStarred: boolean;
 	iconPath: string;
 	id: string;
 	name: string;
@@ -30,9 +31,12 @@ function Dashboard() {
 		const updatedBookmarks:BookmarkType[] = [];
 		querySnapshot.forEach((doc) => {
 			const data = doc.data();
-			updatedBookmarks.push({id: doc.id, iconPath:data.bookmarkIconPath, name:data.bookmarkName, link:data.bookmarkURL, category:data.bookmarkCategory})
+			updatedBookmarks.push({id: doc.id, isStarred: data.bookmarkIsStarred, iconPath:data.bookmarkIconPath, name:data.bookmarkName, link:data.bookmarkURL, category:data.bookmarkCategory})
 		});
-		setBookmarks(updatedBookmarks);
+		updatedBookmarks.sort((a, b) => a.category.localeCompare(b.category));
+		const starred = updatedBookmarks.filter(bookmark => bookmark.isStarred);
+		const unstarred = updatedBookmarks.filter(bookmark => !bookmark.isStarred);
+		setBookmarks([...starred, ...unstarred]);
 	}
 
 	const retrieveCategories = async () => {
