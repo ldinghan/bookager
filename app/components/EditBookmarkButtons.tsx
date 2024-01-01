@@ -6,6 +6,7 @@ import { Pencil2Icon, StarFilledIcon, StarIcon, TrashIcon } from '@radix-ui/reac
 import { doc, deleteDoc, setDoc } from "firebase/firestore"
 import { auth, db } from "../../firebase"
 import AddBookmarkComponent from './AddBookmarkComponent';
+import { useTheme } from "next-themes";
 
 type BookmarkType = {
 	isStarred: boolean;
@@ -38,6 +39,7 @@ function EditBookmarkButtons({ currentBookmark, updateData, categories }: { curr
 
 
 	// TOGGLES STARRED BOOKMARK
+	const theme = useTheme().theme;
 	const [isStarred, setIsStarred] = useState(currentBookmark.isStarred);
 	const handleStarred = async () => {
 		let starred = isStarred;
@@ -64,10 +66,10 @@ function EditBookmarkButtons({ currentBookmark, updateData, categories }: { curr
 
 	return (
 		<div className='flex items-center justify-end'>
-			<IconButton color='gold' variant='solid' onClick={handleStarred}>
+			<IconButton color='gold' variant={isStarred ? "classic" : "surface"} onClick={handleStarred}>
 				{isStarred 
 					? <StarFilledIcon width="16" height="16" color="yellow" />
-					: <StarIcon width="16" height="16" color='yellow' />
+					: <StarIcon width="16" height="16" color={theme === "dark" ? "yellow" : "black"} />
 				}
 			</IconButton>
 			<AddBookmarkComponent categories={updatedCategories} updateData={updateData} currentBookmark={currentBookmark} isEdit>

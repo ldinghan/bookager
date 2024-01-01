@@ -11,6 +11,7 @@ import { BookmarkIcon } from '@radix-ui/react-icons';
 import { Button } from '@radix-ui/themes';
 import WebBrowsing from '../components/WebBrowsing';
 import BookmarkIconDisplay from '../components/BookmarkIconDisplay';
+import SettingsComponent from '../components/SettingsComponent';
 
 type BookmarkType = {
 	isStarred: boolean;
@@ -79,8 +80,11 @@ function Dashboard() {
 				</div>
 			</div>
 			<div>
-				<div className='py-2'>
-					<AddBookmarkComponent categories={categories} updateData={updateData}><Button><BookmarkIcon width="16" height="16" />Add Bookmark</Button></AddBookmarkComponent>
+				<div className='py-2 flex justify-between'>
+					<AddBookmarkComponent categories={categories} updateData={updateData}>
+						<Button><BookmarkIcon width="16" height="16" />Add Bookmark</Button>
+					</AddBookmarkComponent>
+					<SettingsComponent categories={categories} updateData={updateData}/>
 				</div>
 			</div>
 			<BookmarkLineDisplay categories={categories} bookmarks={bookmarks} updateData={updateData}/>
