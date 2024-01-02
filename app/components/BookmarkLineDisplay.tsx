@@ -54,7 +54,7 @@ function BookmarkLineDisplay({ categories, bookmarks, updateData }: { categories
                             className='mx-auto'
                         /></div></Table.RowHeaderCell>
                         <Table.Cell>{bookmark.name}</Table.Cell>
-                        <Table.Cell><Link href={bookmark.link} target='_blank'>{bookmark.link}</Link></Table.Cell>
+                        <Table.Cell><Link href={bookmark.link} target='_blank' tabIndex={-1} >{bookmark.link}</Link></Table.Cell>
                         <Table.Cell>{bookmark.category}</Table.Cell>
                         <Table.Cell><EditBookmarkButtons currentBookmark={bookmark} updateData={updateData} categories={updatedCategories}/></Table.Cell>
                     </Table.Row>
