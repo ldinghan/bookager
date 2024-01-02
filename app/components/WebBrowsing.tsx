@@ -47,7 +47,7 @@ function WebBrowsing() {
 				</TextField.Slot>
 				<TextField.Input ref={inputRef} placeholder="Browse the web" size="3" onKeyDown={e => enterKeyPressed(e)} onChange={e => setQuery(e.target.value)}/>
 			</TextField.Root>
-			<Button className='self-center' onClick={handleSearch}>Search</Button>
+			<Button className='self-center' onClick={handleSearch} tabIndex={-1}>Search</Button>
 		</div>
 	)
 }

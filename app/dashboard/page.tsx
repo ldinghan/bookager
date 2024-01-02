@@ -12,6 +12,7 @@ import { Button } from '@radix-ui/themes';
 import WebBrowsing from '../components/WebBrowsing';
 import BookmarkIconDisplay from '../components/BookmarkIconDisplay';
 import SettingsComponent from '../components/SettingsComponent';
+import SearchBookmarksComponent from '../components/SearchBookmarksComponent';
 
 type BookmarkType = {
 	isStarred: boolean;
@@ -25,6 +26,7 @@ type BookmarkType = {
 function Dashboard() {
 
     const [bookmarks, setBookmarks] = useState(sampleBookmarks);
+	const [displayedBookmarks, setDisplayedBookmarks] = useState<BookmarkType[]>([]);
     const [categories, setCategories] = useState<string[]>(sampleCategories);
 
 	const retrieveBookmarks = async () => {
@@ -37,6 +39,7 @@ function Dashboard() {
 		updatedBookmarks.sort((a, b) => a.category.localeCompare(b.category));
 		const starred = updatedBookmarks.filter(bookmark => bookmark.isStarred);
 		const unstarred = updatedBookmarks.filter(bookmark => !bookmark.isStarred);
+		setDisplayedBookmarks([...starred, ...unstarred]);
 		setBookmarks([...starred, ...unstarred]);
 	}
 
@@ -69,7 +72,6 @@ function Dashboard() {
 			if (user) {
 			  // User is signed in, see docs for a list of available properties
 			  // https://firebase.google.com/docs/reference/js/auth.user
-			  const uid = user.uid;
 			  updateData();
 			} else {
 				setBookmarks(sampleBookmarks);
@@ -87,15 +89,19 @@ function Dashboard() {
 			</div>
 			<div>
 				<div className='py-2 flex justify-between'>
-					<AddBookmarkComponent categories={categories} updateData={updateData}>
-						<Button><BookmarkIcon width="16" height="16" />Add Bookmark</Button>
-					</AddBookmarkComponent>
+					<div>
+						<AddBookmarkComponent categories={categories} updateData={updateData}>
+							<Button><BookmarkIcon width="16" height="16" />Add Bookmark</Button>
+						</AddBookmarkComponent>
+						<SearchBookmarksComponent bookmarks={bookmarks} updateDisplayedBookmarks={setDisplayedBookmarks}/>
+					</div>
+					
 					<SettingsComponent categories={categories} updateData={updateData} currentView={selectedView} updateSelectedView={updateSelectedView}/>
 				</div>
 			</div>
 			{selectedView == "icon"
-				? <BookmarkIconDisplay categories={categories} bookmarks={bookmarks} updateData={updateData} />
-				: <BookmarkLineDisplay categories={categories} bookmarks={bookmarks} updateData={updateData}/>}
+				? <BookmarkIconDisplay categories={categories} bookmarks={displayedBookmarks} updateData={updateData} />
+				: <BookmarkLineDisplay categories={categories} bookmarks={displayedBookmarks} updateData={updateData}/>}
 		</div>
     )
 }
