@@ -64,15 +64,15 @@ const NavBar = () => {
                 </Link>)}
                 
             </ul>
-            <div className='absolute w-1/2 text-center left-1/4 text-2xl font-extrabold tracking-widest z-10'><Link href="/">BOOKAGER</Link></div>
+            <div className='absolute w-1/2 text-center left-1/4 text-2xl font-extrabold tracking-widest z-10'><Link href="/" tabIndex={-1} >BOOKAGER</Link></div>
             <div className='flex space-x-6 items-center z-20'>
                 <LightDarkModeSwitch />
                 {isLoggedIn 
                     ? <><div className='hidden md:block'>{firstName}</div>
-                      <Button className='hover:cursor-pointer' onClick={logoutUser}>Log Out</Button>
+                      <Button className='hover:cursor-pointer' onClick={logoutUser} tabIndex={-1} >Log Out</Button>
                     </>
                     : 
-                    <Button className='hover:cursor-pointer' onClick={loginUser}>Log In</Button>
+                    <Button className='hover:cursor-pointer' onClick={loginUser} tabIndex={-1} >Log In</Button>
                 }
             </div>
         </nav>

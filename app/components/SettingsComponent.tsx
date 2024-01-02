@@ -17,7 +17,7 @@ function SettingsComponent( { categories, updateData, updateSelectedView, curren
     <div>
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger>
-				<Button><GearIcon width="16" height="16" />Settings</Button>
+				<Button tabIndex={-1} ><GearIcon width="16" height="16" />Settings</Button>
 			</DropdownMenu.Trigger>
 			<DropdownMenu.Content>
 				<DropdownMenu.Item onSelect={(e) => e.preventDefault()}>

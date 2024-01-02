@@ -66,20 +66,20 @@ function EditBookmarkButtons({ currentBookmark, updateData, categories }: { curr
 
 	return (
 		<div className='flex items-center justify-end'>
-			<IconButton color='gold' size={{sm:"1", md:"2"}} variant={isStarred ? "classic" : "surface"} onClick={handleStarred}>
+			<IconButton color='gold' size={{sm:"1", md:"2"}} variant={isStarred ? "classic" : "surface"} onClick={handleStarred} tabIndex={-1} >
 				{isStarred 
 					? <StarFilledIcon width="16" height="16" color="yellow" />
 					: <StarIcon width="16" height="16" color={theme === "dark" ? "yellow" : "black"} />
 				}
 			</IconButton>
 			<AddBookmarkComponent categories={updatedCategories} updateData={updateData} currentBookmark={currentBookmark} isEdit>
-				<Button size={{sm:"1", md:"2"}} variant='soft'>
+				<Button size={{sm:"1", md:"2"}} variant='soft' tabIndex={-1} >
 					<Pencil2Icon width="16" height="16" /><Text size={{initial:"1", md:"2"}}>Edit</Text>
 				</Button>
 			</AddBookmarkComponent>
 			<AlertDialog.Root>
 			<AlertDialog.Trigger>
-				<Button size={{sm:"1", md:"2"}}  color="red" variant="soft">
+				<Button size={{sm:"1", md:"2"}}  color="red" variant="soft" tabIndex={-1} >
 					<TrashIcon width="16" height="16"/><Text size={{initial:"1", md:"2"}}>Delete</Text>
 				</Button>
 			</AlertDialog.Trigger>
@@ -91,7 +91,7 @@ function EditBookmarkButtons({ currentBookmark, updateData, categories }: { curr
 
 				<Flex gap="3" mt="4" justify="end">
 				<AlertDialog.Cancel>
-					<Button variant="soft" color="gray">
+					<Button variant="soft" color="gray" tabIndex={-1} >
 					Cancel
 					</Button>
 				</AlertDialog.Cancel>
