@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from 'react'
-import { Card, Flex, Avatar, Box, Text } from '@radix-ui/themes'
+import { Grid } from '@radix-ui/themes'
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
+import BookmarkIconCard from './BookmarkIconCard';
 
 type BookmarkType = {
     isStarred: boolean;
@@ -24,39 +25,18 @@ function BookmarkIconDisplay({ categories, bookmarks, updateData }: { categories
 
 	const theme = useTheme().theme;
 
-	const handleHover = () => {
-
-	}
-
+	
 	
 	
 	
 	return (
-		<div>
+		<Grid columns="5" gap="4" width="auto" justify="center" align="center">
 			{bookmarks.map(bookmark => 
 			<div key={bookmark.id}>
-				<Card style={{ maxWidth: 320 }}>
-				<Flex gap="3" direction="column" align="center" justify="center">
-					{bookmark.iconPath && <Image
-								src={ bookmark.iconPath }
-								alt='icon'
-								width={35}
-								height={35}
-								className=''
-					/>}
-					<Box>
-					<Text as="div" size="2" weight="bold" align="center">
-						{bookmark.name}
-					</Text>
-					<Text as="div" size="1" color="gray" align="center">
-						{bookmark.link.substring(0, 30) + (bookmark.link.length > 30 ? "..." : "")}
-					</Text>
-					</Box>
-				</Flex>
-				</Card>
+				<BookmarkIconCard bookmark={bookmark} categories={updatedCategories} updateData={updateData} />
 			</div>
 			)}
-		</div>
+		</Grid>
 	)
 }
 

@@ -55,6 +55,12 @@ function Dashboard() {
 		retrieveCategories();
 	}
 
+
+	const [selectedView, setSelectedView] = useState("icon");
+	const updateSelectedView = (view:string) => {
+		setSelectedView(view);
+	}
+
 	useEffect(() => {
 		if (auth.currentUser) {
 			updateData();
@@ -84,11 +90,12 @@ function Dashboard() {
 					<AddBookmarkComponent categories={categories} updateData={updateData}>
 						<Button><BookmarkIcon width="16" height="16" />Add Bookmark</Button>
 					</AddBookmarkComponent>
-					<SettingsComponent categories={categories} updateData={updateData}/>
+					<SettingsComponent categories={categories} updateData={updateData} currentView={selectedView} updateSelectedView={updateSelectedView}/>
 				</div>
 			</div>
-			{/* <BookmarkLineDisplay categories={categories} bookmarks={bookmarks} updateData={updateData}/> */}
-			<BookmarkIconDisplay categories={categories} bookmarks={bookmarks} updateData={updateData} />
+			{selectedView == "icon"
+				? <BookmarkIconDisplay categories={categories} bookmarks={bookmarks} updateData={updateData} />
+				: <BookmarkLineDisplay categories={categories} bookmarks={bookmarks} updateData={updateData}/>}
 		</div>
     )
 }
