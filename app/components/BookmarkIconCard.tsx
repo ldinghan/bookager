@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react'
-import { Card, Flex, Box, Text, Link } from '@radix-ui/themes'
+import { Card, Flex, Text, Link } from '@radix-ui/themes'
 import Image from 'next/image'
 import EditBookmarkButtons from './EditBookmarkButtons';
 import DefaultIcon from "../../assets/DefaultIcon.png";

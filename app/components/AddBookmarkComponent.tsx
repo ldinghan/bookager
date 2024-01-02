@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { Dialog, Button, Flex, Text, TextField, Select } from '@radix-ui/themes'
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { collection, addDoc, doc, setDoc } from "firebase/firestore"; 
 import { auth, db, storage } from '../../firebase'

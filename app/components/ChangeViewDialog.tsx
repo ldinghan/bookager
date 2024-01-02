@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react'
-import { Dialog, Text, Flex, Checkbox, Button, RadioGroup } from "@radix-ui/themes"
+import { Dialog, Text, Flex, Button, RadioGroup } from "@radix-ui/themes"
 
 
 function ChangeViewDialog({ currentView, updateSelectedView }:{ currentView:string, updateSelectedView:Function } ) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { GearIcon } from '@radix-ui/react-icons'
-import { Button, Dialog, DropdownMenu, Text } from "@radix-ui/themes"
+import { Button, DropdownMenu } from "@radix-ui/themes"
 import React, { useEffect, useState } from 'react'
 import DeleteCategoryDialog from './DeleteCategoryDialog'
 import ChangeViewDialog from './ChangeViewDialog';

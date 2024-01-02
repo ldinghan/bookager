@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 import { Grid } from '@radix-ui/themes'
-import { useTheme } from 'next-themes';
-import Image from 'next/image';
 import BookmarkIconCard from './BookmarkIconCard';
 
 type BookmarkType = {
@@ -22,12 +20,6 @@ function BookmarkIconDisplay({ categories, bookmarks, updateData }: { categories
         categories.sort();
         setUpdatedCategories(categories);
     }, [categories]); 
-
-	const theme = useTheme().theme;
-
-	
-	
-	
 	
 	return (
 		<Grid columns={{initial:"2", sm:"3", md:"4", lg:"5"}} gap="4" width="auto" justify="center" align="center">
