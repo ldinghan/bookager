@@ -3,6 +3,7 @@
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
 import React, { useEffect, useState } from 'react'
 import {useTheme} from "next-themes";
+import { IconButton } from '@radix-ui/themes';
 
 function LightDarkModeSwitch() {
     const { setTheme, theme } = useTheme()
@@ -22,9 +23,9 @@ function LightDarkModeSwitch() {
     };
 
     return (
-        <button onClick={toggleDarkMode}>
-        {isDarkMode ? <MoonIcon /> : <SunIcon />}
-        </button>
+        <IconButton onClick={toggleDarkMode} variant={theme == "dark" ? "solid" : "ghost"}>
+            {isDarkMode ? <MoonIcon width={18} height={18} /> : <SunIcon width={18} height={18} />}
+        </IconButton>
     );
 }
 

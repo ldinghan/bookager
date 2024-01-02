@@ -87,8 +87,8 @@ function Dashboard() {
 					<SettingsComponent categories={categories} updateData={updateData}/>
 				</div>
 			</div>
-			<BookmarkLineDisplay categories={categories} bookmarks={bookmarks} updateData={updateData}/>
-			{/* <BookmarkIconDisplay /> */}
+			{/* <BookmarkLineDisplay categories={categories} bookmarks={bookmarks} updateData={updateData}/> */}
+			<BookmarkIconDisplay categories={categories} bookmarks={bookmarks} updateData={updateData} />
 		</div>
     )
 }

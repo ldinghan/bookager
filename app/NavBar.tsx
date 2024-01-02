@@ -63,8 +63,8 @@ const NavBar = () => {
                 </Link>)}
                 
             </ul>
-            <div className='absolute w-1/2 text-center left-1/4 text-2xl font-extrabold tracking-widest'><Link href="/">BOOKAGER</Link></div>
-            <div className='flex space-x-6 items-center'>
+            <div className='absolute w-1/2 text-center left-1/4 text-2xl font-extrabold tracking-widest z-10'><Link href="/">BOOKAGER</Link></div>
+            <div className='flex space-x-6 items-center z-20'>
                 <LightDarkModeSwitch />
                 {isLoggedIn 
                     ? <><div>{firstName}</div>
