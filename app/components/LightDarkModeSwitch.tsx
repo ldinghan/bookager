@@ -5,8 +5,9 @@ import React, { useState } from 'react'
 import {useTheme} from "next-themes";
 
 function LightDarkModeSwitch() {
-    const [isDarkMode, setDarkMode] = useState(false);
-    const { setTheme } = useTheme()
+    const { setTheme, theme } = useTheme()
+    const [isDarkMode, setDarkMode] = useState(theme === "dark");
+    
 
     const toggleDarkMode = () => {
         if (isDarkMode) {
