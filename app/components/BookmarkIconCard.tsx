@@ -25,11 +25,13 @@ function BookmarkIconCard ({ bookmark, categories, updateData }:{ bookmark:Bookm
         <Card style={{ maxWidth: 320 }} variant='surface' onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         
             <Flex gap="3" direction="column" align="center" justify="center">
-                <Image
+                
+                <div className='bg-white'><Image
                     src={ bookmark.iconPath ? bookmark.iconPath : DefaultIcon}
                     alt='icon'
                     width={35}
                     height={35} />
+                </div>
                 <Link href={bookmark.link} target="_blank">
                 <Text as="div" size="3" weight="bold" align="center">
                     {bookmark.name}

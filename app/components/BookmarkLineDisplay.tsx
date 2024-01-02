@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes';
 import EditBookmarkButtons from './EditBookmarkButtons';
 import Image from "next/image";
 import classnames from 'classnames';
+import DefaultIcon from "../../assets/DefaultIcon.png";
 
 type BookmarkType = {
     isStarred: boolean;
@@ -45,13 +46,13 @@ function BookmarkLineDisplay({ categories, bookmarks, updateData }: { categories
                         'hover:bg-violet-700': theme === 'dark'
                     })} >
                         <Table.RowHeaderCell>
-                        {bookmark.iconPath && <Image
-                            src={ bookmark.iconPath }
+                        <div className='bg-white w-auto'><Image
+                            src={ bookmark.iconPath ? bookmark.iconPath : DefaultIcon}
                             alt='icon'
                             width={24}
                             height={24}
                             className='mx-auto'
-                        />}</Table.RowHeaderCell>
+                        /></div></Table.RowHeaderCell>
                         <Table.Cell>{bookmark.name}</Table.Cell>
                         <Table.Cell><Link href={bookmark.link} target='_blank'>{bookmark.link}</Link></Table.Cell>
                         <Table.Cell>{bookmark.category}</Table.Cell>
