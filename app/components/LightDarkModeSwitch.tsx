@@ -1,13 +1,16 @@
 "use client";
 
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {useTheme} from "next-themes";
 
 function LightDarkModeSwitch() {
     const { setTheme, theme } = useTheme()
-    const [isDarkMode, setDarkMode] = useState(theme === "dark");
+    const [isDarkMode, setDarkMode] = useState(false);
     
+    useEffect(() => {
+        setDarkMode(theme == "dark")
+    }, [])
 
     const toggleDarkMode = () => {
         if (isDarkMode) {
