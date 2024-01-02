@@ -32,7 +32,7 @@ function BookmarkIconCard ({ bookmark, categories, updateData }:{ bookmark:Bookm
                     width={35}
                     height={35} />
                 </div>
-                <Link href={bookmark.link} target="_blank">
+                <Link href={bookmark.link} target="_blank" tabIndex={-1} >
                 <Text as="div" size="3" weight="bold" align="center">
                     {bookmark.name}
                 </Text>

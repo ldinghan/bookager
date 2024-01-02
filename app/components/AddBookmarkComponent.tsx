@@ -145,7 +145,7 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
     return (
         <>
         <Dialog.Root>
-            <Dialog.Trigger>
+            <Dialog.Trigger tabIndex={-1}>
                 {children}
             </Dialog.Trigger>
 
