@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react'
-import { Button, AlertDialog, Flex, IconButton } from '@radix-ui/themes'
+import { Button, AlertDialog, Flex, IconButton, Text } from '@radix-ui/themes'
 import { Pencil2Icon, StarFilledIcon, StarIcon, TrashIcon } from '@radix-ui/react-icons'
 import { doc, deleteDoc, setDoc } from "firebase/firestore"
 import { auth, db } from "../../firebase"
@@ -66,20 +66,22 @@ function EditBookmarkButtons({ currentBookmark, updateData, categories }: { curr
 
 	return (
 		<div className='flex items-center justify-end'>
-			<IconButton color='gold' variant={isStarred ? "classic" : "surface"} onClick={handleStarred}>
+			<IconButton color='gold' size={{sm:"1", md:"2"}} variant={isStarred ? "classic" : "surface"} onClick={handleStarred}>
 				{isStarred 
 					? <StarFilledIcon width="16" height="16" color="yellow" />
 					: <StarIcon width="16" height="16" color={theme === "dark" ? "yellow" : "black"} />
 				}
 			</IconButton>
 			<AddBookmarkComponent categories={updatedCategories} updateData={updateData} currentBookmark={currentBookmark} isEdit>
-				<Button variant='soft'>
-					<Pencil2Icon width="16" height="16"/>Edit
+				<Button size={{sm:"1", md:"2"}} variant='soft'>
+					<Pencil2Icon width="16" height="16" /><Text size={{initial:"1", md:"2"}}>Edit</Text>
 				</Button>
 			</AddBookmarkComponent>
 			<AlertDialog.Root>
 			<AlertDialog.Trigger>
-				<Button color="red" variant="soft"><TrashIcon width="16" height="16"/>Delete</Button>
+				<Button size={{sm:"1", md:"2"}}  color="red" variant="soft">
+					<TrashIcon width="16" height="16"/><Text size={{initial:"1", md:"2"}}>Delete</Text>
+				</Button>
 			</AlertDialog.Trigger>
 			<AlertDialog.Content style={{ maxWidth: 450 }}>
 				<AlertDialog.Title>Delete Bookmark</AlertDialog.Title>
