@@ -67,7 +67,7 @@ const NavBar = () => {
             <div className='flex space-x-6 items-center z-20'>
                 <LightDarkModeSwitch />
                 {isLoggedIn 
-                    ? <><div>{firstName}</div>
+                    ? <><div className='hidden md:block'>{firstName}</div>
                       <Button className='hover:cursor-pointer' onClick={logoutUser}>Log Out</Button>
                     </>
                     : 

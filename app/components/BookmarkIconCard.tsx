@@ -1,8 +1,11 @@
-import React from 'react'
-import { Card, Flex, Box, Text } from '@radix-ui/themes'
+"use client";
+
+import React, { useState } from 'react'
+import { Card, Flex, Box, Text, Link } from '@radix-ui/themes'
 import Image from 'next/image'
 import EditBookmarkButtons from './EditBookmarkButtons';
 import DefaultIcon from "../../assets/DefaultIcon.png";
+import { useTheme } from 'next-themes';
 
 type BookmarkType = {
     isStarred: boolean;
@@ -14,29 +17,35 @@ type BookmarkType = {
 }
 
 function BookmarkIconCard ({ bookmark, categories, updateData }:{ bookmark:BookmarkType, categories:string[], updateData:Function }) {
-  return (
-    <Card style={{ maxWidth: 320 }} variant='surface'>
-    <Flex gap="3" direction="column" align="center" justify="center">
-        <Image
-            src={ bookmark.iconPath ? bookmark.iconPath : DefaultIcon}
-            alt='icon'
-            width={35}
-            height={35} />
-        <Box>
-        <Text as="div" size="3" weight="bold" align="center">
-            {bookmark.name}
-        </Text>
-        <Text as="div" size="2" color="gray" align="center">
-            {bookmark.category}
-        </Text>
-        <Text as="div" size="1" color="gray" align="center">
-            {bookmark.link.substring(0, 30) + (bookmark.link.length > 30 ? "..." : "")}
-        </Text>
-        </Box>
-        <EditBookmarkButtons currentBookmark={bookmark} categories={categories} updateData={updateData}/>
-    </Flex>
-    </Card>
-  )
+
+    const [isHover, setIsHover] = useState(false);
+    const theme = useTheme().theme;
+
+    return (
+        <Card style={{ maxWidth: 320 }} variant='surface' onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        
+            <Flex gap="3" direction="column" align="center" justify="center">
+                <Image
+                    src={ bookmark.iconPath ? bookmark.iconPath : DefaultIcon}
+                    alt='icon'
+                    width={35}
+                    height={35} />
+                <Link href={bookmark.link} target="_blank">
+                <Text as="div" size="3" weight="bold" align="center">
+                    {bookmark.name}
+                </Text>
+                <Text as="div" size="2" color={theme == "dark" ? "ruby" : "crimson"} align="center">
+                    {bookmark.category}
+                </Text>
+                <Text as="div" size="1" color="gray" align="center">
+                    {isHover ? bookmark.link : bookmark.link.substring(0, 30) + (bookmark.link.length > 30 ? "..." : "")}
+                </Text>
+                </Link>
+
+                <EditBookmarkButtons currentBookmark={bookmark} categories={categories} updateData={updateData}/>
+            </Flex>
+        </Card>
+    )
 }
 
 export default BookmarkIconCard

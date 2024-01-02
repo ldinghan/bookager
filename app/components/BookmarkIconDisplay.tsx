@@ -30,7 +30,7 @@ function BookmarkIconDisplay({ categories, bookmarks, updateData }: { categories
 	
 	
 	return (
-		<Grid columns="5" gap="4" width="auto" justify="center" align="center">
+		<Grid columns={{initial:"2", sm:"3", md:"4", lg:"5"}} gap="4" width="auto" justify="center" align="center">
 			{bookmarks.map(bookmark => 
 			<div key={bookmark.id}>
 				<BookmarkIconCard bookmark={bookmark} categories={updatedCategories} updateData={updateData} />
