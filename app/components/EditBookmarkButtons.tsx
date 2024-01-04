@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from 'react'
-import { Button, AlertDialog, Flex, IconButton, Text } from '@radix-ui/themes'
+import { Button, AlertDialog, Flex, IconButton, Text, Dialog } from '@radix-ui/themes'
 import { Pencil2Icon, StarFilledIcon, StarIcon, TrashIcon } from '@radix-ui/react-icons'
 import { doc, deleteDoc, setDoc } from "firebase/firestore"
 import { auth, db } from "../../firebase"
 import AddBookmarkComponent from './AddBookmarkComponent';
 import { useTheme } from "next-themes";
+import NotLoggedInAlert from './NotLoggedInAlert';
 
 type BookmarkType = {
 	isStarred: boolean;
@@ -66,7 +67,7 @@ function EditBookmarkButtons({ currentBookmark, updateData, categories }: { curr
 
 	return (
 		<div className='flex items-center justify-end'>
-			<IconButton color='gold' size={{sm:"1", md:"2"}} variant={isStarred ? "classic" : "surface"} onClick={handleStarred} tabIndex={-1} >
+			<IconButton color='gold' size={{sm:"1", md:"2"}} variant={isStarred ? "classic" : "surface"} onClick={handleStarred} tabIndex={-1} disabled={auth.currentUser ? false : true}>
 				{isStarred 
 					? <StarFilledIcon width="16" height="16" color="yellow" />
 					: <StarIcon width="16" height="16" color={theme === "dark" ? "yellow" : "black"} />
@@ -79,7 +80,7 @@ function EditBookmarkButtons({ currentBookmark, updateData, categories }: { curr
 			</AddBookmarkComponent>
 			<AlertDialog.Root>
 			<AlertDialog.Trigger>
-				<Button size={{sm:"1", md:"2"}}  color="red" variant="soft" tabIndex={-1} >
+				<Button size={{sm:"1", md:"2"}}  color="red" variant="soft" tabIndex={-1} disabled={auth.currentUser ? false : true} >
 					<TrashIcon width="16" height="16"/><Text size={{initial:"1", md:"2"}}>Delete</Text>
 				</Button>
 			</AlertDialog.Trigger>
@@ -102,6 +103,7 @@ function EditBookmarkButtons({ currentBookmark, updateData, categories }: { curr
 				</AlertDialog.Action>
 				</Flex>
 			</AlertDialog.Content>
+			
 			</AlertDialog.Root>
 		</div>
 	)

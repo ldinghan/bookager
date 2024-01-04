@@ -80,6 +80,8 @@ function Dashboard() {
 		  });
 	}, [])
 
+
+
     return (
 		<div className='w-full'>
 			<div className='flex justify-center'>
@@ -91,7 +93,7 @@ function Dashboard() {
 				<div className='py-2 flex justify-between'>
 					<div>
 						<AddBookmarkComponent categories={categories} updateData={updateData}>
-							<Button><BookmarkIcon width="16" height="16" />Add Bookmark</Button>
+							<Button tabIndex={-1} ><BookmarkIcon width="16" height="16" />Add Bookmark</Button>
 						</AddBookmarkComponent>
 						<SearchBookmarksComponent bookmarks={bookmarks} updateDisplayedBookmarks={setDisplayedBookmarks}/>
 					</div>

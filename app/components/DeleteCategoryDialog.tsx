@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { Dialog, Button, Flex, Text, Checkbox } from '@radix-ui/themes'
 import { auth, db } from "../../firebase"
 import { deleteDoc, collection, doc, getDocs } from "firebase/firestore"
+import NotLoggedInAlert from './NotLoggedInAlert';
 
 function DeleteCategoryDialog({ categories, updateData } : { categories:string[], updateData:Function }) {
 
@@ -49,7 +50,7 @@ function DeleteCategoryDialog({ categories, updateData } : { categories:string[]
 			<Dialog.Trigger>
 				<Text>Delete Categories</Text>
 			</Dialog.Trigger>
-
+			{auth.currentUser ? 
 			<Dialog.Content style={{ maxWidth: 450 }}>
 				<Dialog.Title>Delete Categories</Dialog.Title>
 				<Dialog.Description size="2" mb="4">
@@ -81,6 +82,7 @@ function DeleteCategoryDialog({ categories, updateData } : { categories:string[]
 				</Dialog.Close>
 				</Flex>
 			</Dialog.Content>
+			: <NotLoggedInAlert />}
 			</Dialog.Root>
 		</>
 	)

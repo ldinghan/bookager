@@ -7,6 +7,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc, doc, setDoc } from "firebase/firestore"; 
 import { auth, db, storage } from '../../firebase'
 import { PlusIcon } from '@radix-ui/react-icons'
+import NotLoggedInAlert from './NotLoggedInAlert';
 
 type BookmarkType = {
     isStarred: boolean;
@@ -30,12 +31,12 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
 			// NO EMPTY CATEGORY
 			return;
 		}
-        if (!updatedCategories.includes(cleanedNewCategory)) {
+        if (!updatedCategories.includes(cleanedNewCategory) && auth.currentUser) {
             const updatedCategoriesSorted = [...updatedCategories, cleanedNewCategory];
 			updatedCategoriesSorted.sort();
 			setUpdatedCategories(updatedCategoriesSorted);
             try {
-                await addDoc(collection(db, `users/${auth.currentUser?.uid}/categories`), {
+                await addDoc(collection(db, `users/${auth.currentUser.uid}/categories`), {
                     category: cleanedNewCategory
                 });
             } catch (e) {
@@ -48,8 +49,6 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
         categories.sort();
         setUpdatedCategories(categories);
     }, [categories]); 
-
-
 
 
     // HANDLES ADDING OF BOOKMARKS
@@ -145,10 +144,10 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
     return (
         <>
         <Dialog.Root>
-            <Dialog.Trigger tabIndex={-1}>
+            <Dialog.Trigger tabIndex={-1} >
                 {children}
             </Dialog.Trigger>
-
+            {auth.currentUser ? 
             <Dialog.Content style={{ maxWidth: 450 }}>
                 <Dialog.Title>Add Bookmark</Dialog.Title>
                 <Dialog.Description size="2" mb="4">
@@ -245,6 +244,8 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
                 </Dialog.Close>
                 </Flex>
             </Dialog.Content>
+            : 
+            <NotLoggedInAlert />}
         </Dialog.Root>
         </>
     )
