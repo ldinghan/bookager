@@ -8,9 +8,27 @@ function WebBrowsing() {
 	const [query, setQuery] = useState("");
 	const inputRef = useRef<HTMLInputElement>(null);
 
+	function isValidHttpUrl(string:string) {
+		let url;
+		
+		try {
+		  url = new URL(string);
+		} catch (_) {
+		  return false;  
+		}
+	  
+		return url.protocol === "http:" || url.protocol === "https:";
+	}
+
 	const handleSearch = () => {
-		const cleanedQuery = query.replaceAll(" ", "%20")
-		const url = `https://www.google.com/search?q=${cleanedQuery}`
+		let url;
+		if (isValidHttpUrl(query)) {
+			url = query;
+		} else {
+			const cleanedQuery = query.replaceAll(" ", "%20")
+			url = `https://www.google.com/search?q=${cleanedQuery}`
+		}
+		
 		window.open(url, '_blank')!.focus();
 	}
 
