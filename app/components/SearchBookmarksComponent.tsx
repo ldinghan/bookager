@@ -21,9 +21,24 @@ function SearchBookmarksComponent({ bookmarks, updateDisplayedBookmarks }:{ book
     const handleSearch = (query:string) => {
         setSearchQuery(query);
         // Update the displayed bookmarks based on the search query
-        setFilteredBookmarks(bookmarks.filter((bookmark) =>
+        const filtered = bookmarks.filter((bookmark) =>
             bookmark.name.toLowerCase().includes(query.toLowerCase())
-        ));
+        );
+        const sortedBookmarks = filtered.sort((a, b) => {
+            const aStartsWithQuery = a.name.toLowerCase().startsWith(query.toLowerCase());
+            const bStartsWithQuery = b.name.toLowerCase().startsWith(query.toLowerCase());
+    
+            if (aStartsWithQuery && !bStartsWithQuery) {
+                return -1; // a comes first
+            } else if (!aStartsWithQuery && bStartsWithQuery) {
+                return 1; // b comes first
+            } else {
+                return 0; // no change in order
+            }
+        });
+    
+        // Update the displayed bookmarks
+        setFilteredBookmarks(sortedBookmarks);
         updateDisplayedBookmarks(filteredBookmarks);
     };
 
