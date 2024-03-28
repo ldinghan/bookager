@@ -18,6 +18,7 @@ const NavBar = () => {
     const links = [
         { label: "Home", href:"/" },
         { label: "Dashboard", href:"/dashboard" },
+        { label: "Analytics", href:"/analytics" }
     ]
 
     useEffect(() => {

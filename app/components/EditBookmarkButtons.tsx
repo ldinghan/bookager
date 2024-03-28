@@ -66,7 +66,7 @@ function EditBookmarkButtons({ currentBookmark, updateData, categories }: { curr
 
 
 	return (
-		<div className='flex items-center justify-end'>
+		<div className='flex items-center justify-end gap-2'>
 			<IconButton color='gold' size={{sm:"1", md:"2"}} variant={isStarred ? "classic" : "surface"} onClick={handleStarred} tabIndex={-1} disabled={auth.currentUser ? false : true}>
 				{isStarred 
 					? <StarFilledIcon width="16" height="16" color="yellow" />

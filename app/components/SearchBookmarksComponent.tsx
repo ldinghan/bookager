@@ -61,7 +61,7 @@ function SearchBookmarksComponent({ bookmarks, updateDisplayedBookmarks }:{ book
 
 
     return (
-        <TextField.Root>
+        <TextField.Root className='mt-2'>
             <TextField.Slot>
                 <MagnifyingGlassIcon height="16" width="16" />
             </TextField.Slot>

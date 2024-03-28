@@ -58,7 +58,7 @@ function WebBrowsing() {
 	}, []);
 
 	return (
-		<div className='flex'>
+		<div className='flex gap-2'>
 			<TextField.Root size="3" >
 				<TextField.Slot>
 					<GlobeIcon height="16" width="16" />
