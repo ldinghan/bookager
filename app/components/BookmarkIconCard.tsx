@@ -5,6 +5,7 @@ import { Card, Flex, Text, Link } from '@radix-ui/themes'
 import Image from 'next/image'
 import EditBookmarkButtons from './EditBookmarkButtons';
 import DefaultIcon from "../../assets/DefaultIcon.png";
+import { resolveIcon } from '../utils/resolveIcon';
 import { useTheme } from 'next-themes';
 
 type BookmarkType = {
@@ -27,7 +28,7 @@ function BookmarkIconCard ({ bookmark, categories, updateData }:{ bookmark:Bookm
             <Flex gap="3" direction="column" align="center" justify="center">
                 
                 <div className='bg-white'><Image
-                    src={ bookmark.iconPath ? bookmark.iconPath : DefaultIcon}
+                    src={ resolveIcon(bookmark.iconPath) ?? DefaultIcon}
                     alt='icon'
                     width={35}
                     height={35} />

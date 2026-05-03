@@ -6,6 +6,7 @@ import EditBookmarkButtons from './EditBookmarkButtons';
 import Image from "next/image";
 import classnames from 'classnames';
 import DefaultIcon from "../../assets/DefaultIcon.png";
+import { resolveIcon } from '../utils/resolveIcon';
 
 type BookmarkType = {
     isStarred: boolean;
@@ -47,7 +48,7 @@ function BookmarkLineDisplay({ categories, bookmarks, updateData }: { categories
                     })} >
                         <Table.RowHeaderCell>
                         <div className='bg-white w-auto'><Image
-                            src={ bookmark.iconPath ? bookmark.iconPath : DefaultIcon}
+                            src={ resolveIcon(bookmark.iconPath) ?? DefaultIcon}
                             alt='icon'
                             width={24}
                             height={24}

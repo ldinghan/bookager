@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/generate-icons-manifest.js",
     "dev": "next dev",
+    "prebuild": "node scripts/generate-icons-manifest.js",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:icons": "node scripts/generate-icons-manifest.js"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",

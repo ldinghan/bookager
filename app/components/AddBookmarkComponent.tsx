@@ -54,6 +54,9 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
     // HANDLES ADDING OF BOOKMARKS
     const [bookmarkIsStarred, setBookmarkIsStarred] = useState(currentBookmark ? currentBookmark.isStarred : false);
     const [bookmarkIconPath, setBookmarkIconPath] = useState(currentBookmark ? currentBookmark.iconPath : "");
+    const [bookmarkIconSearch, setBookmarkIconSearch] = useState(
+        currentBookmark && !currentBookmark.iconPath.startsWith("http") ? currentBookmark.iconPath : ""
+    );
     const [bookmarkName, setBookmarkName] = useState(currentBookmark ? currentBookmark.name : "");
     const [bookmarkURL, setBookmarkURL] = useState(currentBookmark ? currentBookmark.link : "");
     const [bookmarkCategory, setBookmarkCategory] = useState(currentBookmark ? currentBookmark.category : updatedCategories[0]);
@@ -66,7 +69,10 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
         try {
             if (auth.currentUser) {
                 let imageUrl = "";
-                if (file) {
+                if (bookmarkIconSearch.trim()) {
+                    imageUrl = bookmarkIconSearch.trim();
+                    setBookmarkIconPath(imageUrl);
+                } else if (file) {
                     const storageRef = ref(storage, `${auth.currentUser.uid}/${file.name}`);
                     await uploadBytes(storageRef, file);
                     const snapshot = await getDownloadURL(storageRef);
@@ -97,7 +103,10 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
         try {
             if (auth.currentUser) {
                 let imageUrl = "";
-                if (file) {
+                if (bookmarkIconSearch.trim()) {
+                    imageUrl = bookmarkIconSearch.trim();
+                    setBookmarkIconPath(imageUrl);
+                } else if (file) {
                     const storageRef = ref(storage, `${auth.currentUser.uid}/${file.name}`);
                     await uploadBytes(storageRef, file);
                     const snapshot = await getDownloadURL(storageRef);
@@ -105,7 +114,7 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
                     setBookmarkIconPath(imageUrl);
                 }
                 await setDoc(doc(db, `users/${auth.currentUser.uid}/bookmarks`, currentBookmark!.id), {
-                    bookmarkIsStarred, 
+                    bookmarkIsStarred,
                     bookmarkIconPath: imageUrl,
                     bookmarkName,
                     bookmarkURL,
@@ -135,6 +144,9 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
         //setFile(currentBookmark ? undefined : undefined);
         setBookmarkIsStarred(currentBookmark ? currentBookmark.isStarred : false);
         setBookmarkIconPath(currentBookmark ? currentBookmark.iconPath : "");
+        setBookmarkIconSearch(
+            currentBookmark && !currentBookmark.iconPath.startsWith("http") ? currentBookmark.iconPath : ""
+        );
         setBookmarkName(currentBookmark ? currentBookmark.name : "");
         setBookmarkURL(currentBookmark ? currentBookmark.link : "");
         setBookmarkCategory(currentBookmark ? currentBookmark.category : "");
@@ -226,10 +238,23 @@ function AddBookmarkComponent({ categories, updateData, children, currentBookmar
                 </label>
                 <label>
                     <Text as="div" size="2" mb="1" weight="bold">
-                    Image (optional)
+                    Icon name or link (optional)
+                    </Text>
+                    <TextField.Input
+                    placeholder="e.g. leetcode_icon  or  https://.../leetcode_icon.png"
+                    value={bookmarkIconSearch}
+                    onChange={e => setBookmarkIconSearch(e.target.value)}
+                    />
+                    <Text as="div" size="1" color="gray" mt="1">
+                    Matches a file in /public/icons by substring on filename. Takes precedence over the upload below.
+                    </Text>
+                </label>
+                <label>
+                    <Text as="div" size="2" mb="1" weight="bold">
+                    Image upload (optional)
                     </Text>
                     <input type='file' onChange={handleFileUpload}/>
-                    
+
                 </label>
                 </Flex>
 
