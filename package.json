@@ -2,6 +2,9 @@
   "name": "bookager",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "predev": "node scripts/generate-icons-manifest.js",
     "dev": "next dev",
@@ -16,7 +19,7 @@
     "@radix-ui/themes": "^2.0.3",
     "classnames": "^2.5.0",
     "firebase": "^10.7.1",
-    "next": "14.0.4",
+    "next": "^14.2.35",
     "next-themes": "^0.2.1",
     "postcss-import": "^15.1.0",
     "react": "^18",
